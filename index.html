@@ -6,774 +6,16 @@
   <title>Multi-Service Booking Platform</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <style>
-    /* Reset and base styles */
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #F5E9E2; /* Light beige */
-      color: #2B5C8A; /* Shades of blue for text */
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
-
-    a:hover, a:focus {
-      color: #17A589; /* teal highlight */
-      outline: none;
-    }
-
-    button {
-      font-family: inherit;
-      cursor: pointer;
-      border: none;
-      border-radius: 12px;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    /* Container max width and padding */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding-left: 24px;
-      padding-right: 24px;
-      width: 100%;
-    }
-
-    /* Header */
-    header {
-      position: sticky;
-      top: 0;
-      background: linear-gradient(90deg, #f6efe6, #e3f4f6, #f6efe6); /* Sand to sea blend */
-       color: #054649;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-      z-index: 10000;
-      border-bottom: 1px solid #D9CFC6;
-    }
-
-    .header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 64px;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    /* Logo */
-    .logo {
-      font-weight: 800;
-      font-size: 1.5rem;
-      color: #155E63; /* dark teal */
-      letter-spacing: 0.05em;
-      user-select: none;
-      
-      flex-shrink: 0;
-    }
-
-    /* Navigation */
-    nav.primary-nav {
-      display: flex;
-      gap: 24px;
-      flex-grow: 1;
-      min-width: 0;
-      align-items: center;
-      flex-wrap: wrap;
-      overflow-x: auto;
-    }
-    nav.primary-nav::-webkit-scrollbar {
-      height: 6px;
-    }
-    nav.primary-nav::-webkit-scrollbar-thumb {
-      background: #17A589;
-      border-radius: 3px;
-    }
-    nav.primary-nav a {
-      font-weight: 600;
-      font-size: 1rem;
-      padding: 8px 4px;
-      position: relative;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    nav.primary-nav a::after {
-      content: "";
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: #17A589; /* teal highlight */
-      transition: width 0.3s ease;
-      border-radius: 10px;
-    }
-    nav.primary-nav a:hover,
-    nav.primary-nav a:focus {
-      color: #17A589;
-    }
-    nav.primary-nav a:hover::after,
-    nav.primary-nav a:focus::after {
-      width: 100%;
-    }
-
-    /* Auth buttons container */
-    .auth-buttons {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      flex-shrink: 0;
-      min-width: 160px;
-      justify-content: flex-end;
-    }
-
-    /* Auth buttons style */
-    .auth-btn {
-      padding: 8px 20px;
-      font-weight: 600;
-      font-size: 1rem;
-      border-radius: 14px;
-      box-shadow: none;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-      user-select: none;
-      cursor: pointer;
-      background-color: transparent;
-      color: #155E63;
-      border: 2px solid #155E63;
-      min-width: 90px;
-      text-align: center;
-      white-space: nowrap;
-    }
-    .auth-btn:hover,
-    .auth-btn:focus {
-      background-color: #17A589;
-      color: white;
-      border-color: #17A589;
-      outline: none;
-      box-shadow: 0 8px 20px rgba(23,165,137,0.4);
-    }
-
-    /* Hamburger menu button for mobile */
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: #155E63;
-      font-size: 32px;
-      line-height: 1;
-      user-select: none;
-      cursor: pointer;
-      padding: 4px;
-      flex-shrink: 0;
-    }
-    .menu-toggle:focus {
-      outline: 2px solid #17A589;
-      outline-offset: 4px;
-    }
-
-    /* Mobile nav menu */
-    .nav-mobile {
-      display: none;
-      flex-direction: column;
-      padding: 16px 24px;
-      background-color: #FBE7D5; /* pastel peach */
-      position: absolute;
-      top: 64px;
-      right: 0;
-      left: 0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
-      z-index: 9999;
-    }
-    .nav-mobile a {
-      padding: 12px 0;
-      border-bottom: 1px solid #D9CFC6;
-      font-weight: 600;
-      color: #155E63;
-      white-space: nowrap;
-    }
-    .nav-mobile a:last-child {
-      border-bottom: none;
-    }
-    .nav-mobile.show {
-      display: flex;
-    }
-
-    /* Hide login/signup buttons in header on mobile */
-    @media (max-width: 767px) {
-      .auth-buttons {
-        display: none;
-      }
-    }
-
-    /* Hide login/signup links inside mobile menu on tablet and desktop */
-    @media (min-width: 768px) {
-      #mobile-login-link,
-      #mobile-signup-link {
-        display: none;
-      }
-    }
-
-    /* Hero Section */
-    .hero {
-      background: linear-gradient(135deg, #FF9F45 0%, #FFE9D6 100%);
-      padding: 96px 24px 120px;
-      text-align: center;
-      color: #155E63;
-      user-select: none;
-    }
-    .hero h1 {
-      font-size: 2.75rem;
-      font-weight: 800;
-      margin-bottom: 20px;
-      line-height: 1.1;
-      max-width: 920px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 0 8px;
-      hyphens: auto;
-    }
-    .hero p {
-      font-size: 1.125rem;
-      max-width: 600px;
-      margin: 0 auto 40px;
-      color: #2B5C8A;
-    }
-    .hero .btn-group {
-      display: flex;
-      justify-content: center;
-      gap: 28px;
-      flex-wrap: wrap;
-    }
-    .hero button.cta-btn {
-      background-color: #17A589;
-      color: #fff;
-      padding: 18px 48px;
-      font-size: 1.125rem;
-      font-weight: 700;
-      border-radius: 16px;
-      box-shadow: 0 6px 14px rgba(23,165,137,0.4);
-      border: none;
-      min-width: 180px;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      white-space: nowrap;
-    }
-    .hero button.cta-btn:hover,
-    .hero button.cta-btn:focus {
-      background-color: #155E63;
-      box-shadow: 0 10px 22px rgba(21,94,99,0.7);
-      outline: none;
-    }
-    .hero button.cta-btn .material-icons {
-      font-size: 24px;
-    }
-
-    /* Core Services Section */
-    section.services {
-      padding: 80px 24px 96px;
-      background-color: #F9F5F0; /* lighter beige */
-      user-select: none;
-    }
-    section.services .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-      gap: 48px;
-      max-width: 1170px;
-    }
-    .service-card {
-      background: #fff;
-      padding: 32px 28px;
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      transition: transform 0.3s ease;
-      min-height: 350px;
-    }
-    .service-card:hover,
-    .service-card:focus-within {
-      transform: translateY(-10px);
-      box-shadow: 0 16px 40px rgba(23,165,137,0.25);
-    }
-    .service-icon {
-      font-size: 56px;
-      color: #17A589;
-      margin-bottom: 24px;
-      flex-shrink: 0;
-    }
-    .service-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-      color: #155E63;
-    }
-    .service-desc {
-      font-size: 1rem;
-      color: #2B5C8A;
-      margin-bottom: 24px;
-      flex-grow: 1;
-      word-break: break-word;
-    }
-    .service-btn {
-      padding: 12px 24px;
-      font-weight: 600;
-      border-radius: 14px;
-      color: #fff;
-      background-color: #FF9F45; /* soft orange */
-      box-shadow: 0 6px 14px rgba(255,159,69,0.4);
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-      user-select: none;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .service-btn:hover,
-    .service-btn:focus {
-      background-color: #d67a1e;
-      box-shadow: 0 10px 26px rgba(214,122,30,0.5);
-      outline: none;
-    }
-
-    /* How it works */
-    section.how-it-works {
-      background: #FBE7D5; /* pastel peach */
-      padding: 80px 24px 96px;
-      user-select: none;
-      color: #155E63;
-    }
-    section.how-it-works .container {
-      max-width: 1140px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 32px;
-    }
-    .step {
-      flex: 1 1 260px;
-      background: #fff;
-      padding: 28px 24px;
-      border-radius: 20px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-      text-align: center;
-      transition: transform 0.3s ease;
-      min-height: 280px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .step:hover,
-    .step:focus-within {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 40px rgba(23,165,137,0.22);
-    }
-    .step-icon {
-      font-size: 48px;
-      color: #17A589;
-      margin-bottom: 20px;
-      flex-shrink: 0;
-    }
-    .step-title {
-      font-size: 1.375rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-      flex-shrink: 0;
-    }
-    .step-desc {
-      font-size: 1rem;
-      color: #2B5C8A;
-      flex-grow: 1;
-    }
-
-    /* Testimonials */
-    section.testimonials {
-      background-color: #F9F5F0; /* lighter beige */
-      padding: 80px 24px 80px;
-      user-select: none;
-      color: #155E63;
-    }
-    section.testimonials .container {
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .testimonial-list {
-      display: flex;
-      flex-direction: column;
-      gap: 48px;
-    }
-    .testimonial {
-      background: #fff;
-      padding: 32px 28px;
-      border-radius: 20px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-      position: relative;
-      font-style: italic;
-      color: #2B5C8A;
-      user-select: text;
-      min-height: 140px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      word-break: break-word;
-    }
-    .testimonial:before {
-      content: "“";
-      font-size: 4rem;
-      position: absolute;
-      top: 12px;
-      left: 20px;
-      color: #17A589;
-      opacity: 0.15;
-      font-style: normal;
-      user-select: none;
-    }
-    .testimonial-cite {
-      margin-top: 16px;
-      font-weight: 600;
-      font-style: normal;
-      color: #155E63;
-      text-align: right;
-      flex-shrink: 0;
-    }
-
-    /* Footer */
-    footer {
-      background-color: #155E63; /* dark teal */
-      color: #F5E9E2; /* light beige */
-      padding: 48px 24px 48px;
-      user-select: none;
-      border-top: 4px solid #FF9F45; /* soft orange border for accent */
-      font-size: 0.95rem;
-      letter-spacing: 0.03em;
-    }
-    .footer-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 64px;
-    }
-    .footer-section {
-      flex: 1 1 220px;
-      min-width: 180px;
-    }
-    .footer-section h4 {
-      margin-bottom: 24px;
-      font-weight: 700;
-      font-size: 1.25rem;
-      letter-spacing: 0.05em;
-      color: #FFE9D6;
-      text-transform: uppercase;
-      border-bottom: 2px solid #FF9F45;
-      padding-bottom: 8px;
-      user-select: text;
-    }
-    .footer-section a {
-      display: block;
-      font-weight: 500;
-      color: #FFE9D6;
-      margin-bottom: 16px;
-      transition: color 0.3s ease;
-      user-select: text;
-    }
-    .footer-section a:hover,
-    .footer-section a:focus {
-      color: #FF9F45;
-      outline: none;
-      text-decoration: underline;
-    }
-    .social-icons {
-      display: flex;
-      gap: 24px;
-      margin-top: 10px;
-      flex-wrap: wrap;
-    }
-    .social-icons a {
-      color: #FFE9D6;
-      font-size: 32px;
-      line-height: 1;
-      transition: color 0.3s ease, transform 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      width: 44px;
-      height: 44px;
-      background-color: rgba(255, 255, 255, 0.1);
-      user-select: none;
-    }
-    .social-icons a:hover,
-    .ocial-icons a:focus {
-      color: #FF9F45;
-      background-color: rgba(255, 159, 69, 0.15);
-      outline: none;
-      transform: scale(1.15);
-    }
-    /* Add subtle top padding and bottom margin for smaller devices */
-    footer p {
-      margin-top: 24px;
-      color: #D9CFC6;
-    }
-
-    /* Modal styles */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(21, 94, 99, 0.7);
-      backdrop-filter: blur(4px);
-      z-index: 15000;
-      justify-content: center;
-      align-items: center;
-      overflow-y: auto;
-      padding: 24px 16px;
-      animation: fadeIn 0.3s ease forwards;
-    }
-    .modal-overlay.show {
-      display: flex;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-    .modal {
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 16px 48px rgba(0,0,0,0.25);
-      max-width: 400px;
-      width: 100%;
-      padding: 32px 32px 24px;
-      position: relative;
-      color: #155E63;
-      user-select: text;
-    }
-    .modal h2 {
-      margin-top: 0;
-      margin-bottom: 24px;
-      font-weight: 800;
-      font-size: 1.75rem;
-      text-align: center;
-    }
-    .close-modal-btn {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: transparent;
-      border: none;
-      font-size: 28px;
-      color: #155E63;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
-    .close-modal-btn:hover,
-    .close-modal-btn:focus {
-      color: #FF9F45;
-      outline: none;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-    label {
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: #155E63;
-    }
-    input[type="email"],
-    input[type="password"],
-    input[type="text"] {
-      padding: 10px 14px;
-      font-size: 1rem;
-      border: 2px solid #D9CFC6;
-      border-radius: 12px;
-      transition: border-color 0.3s ease;
-    }
-    input[type="email"]:focus,
-    input[type="password"]:focus,
-    input[type="text"]:focus {
-      border-color: #17A589;
-      outline: none;
-      box-shadow: 0 0 8px rgba(23,165,137,0.4);
-    }
-    .modal-submit-btn {
-      background-color: #17A589;
-      color: white;
-      padding: 14px;
-      font-weight: 700;
-      font-size: 1.1rem;
-      border-radius: 16px;
-      border: none;
-      cursor: pointer;
-      margin-top: 8px;
-      box-shadow: 0 6px 14px rgba(23,165,137,0.4);
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .modal-submit-btn:hover,
-    .modal-submit-btn:focus {
-      background-color: #155E63;
-      box-shadow: 0 10px 22px rgba(21,94,99,0.7);
-      outline: none;
-    }
-    .modal-footer-text {
-      margin-top: 14px;
-      font-size: 0.9rem;
-      color: #2B5C8A;
-      text-align: center;
-    }
-    .modal-footer-text button {
-      background: none;
-      border: none;
-      color: #17A589;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 0;
-      font-size: 0.9rem;
-    }
-    .modal-footer-text button:hover,
-    .modal-footer-text button:focus {
-      text-decoration: underline;
-      outline: none;
-    }
-
-    /* Responsive breakpoints */
-    @media (max-width: 767px) {
-      .header-inner {
-        padding: 0 16px;
-        height: auto;
-      }
-      nav.primary-nav {
-        display: none;
-      }
-      .menu-toggle {
-        display: block;
-        order: 2;
-      }
-      .logo {
-        order: 1;
-        flex-grow: 1;
-      }
-      .auth-buttons {
-        display: none !important;
-      }
-      .hero h1 {
-        font-size: 2rem;
-      }
-      .hero p {
-        font-size: 1rem;
-      }
-      .hero .btn-group {
-        flex-direction: column;
-        gap: 16px;
-      }
-      section.services .container {
-        grid-template-columns: 1fr;
-      }
-      section.how-it-works .container {
-        flex-direction: column;
-      }
-      .testimonials .testimonial-list {
-        gap: 32px;
-      }
-      .footer-container {
-        flex-direction: column;
-        gap: 48px;
-      }
-      .footer-section {
-        flex: 1 1 100%;
-        min-width: auto;
-      }
-      .social-icons {
-        justify-content: flex-start;
-        flex-wrap: wrap;
-      }
-    }
-
-    @media (min-width: 768px) and (max-width: 1023px) {
-      .hero h1 {
-        font-size: 2.25rem;
-      }
-      .hero p {
-        font-size: 1.125rem;
-      }
-      section.services .container {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      section.how-it-works .container {
-        flex-wrap: wrap;
-      }
-      /* Show auth buttons on tablet */
-      .auth-buttons {
-        display: flex !important;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .hero h1 {
-        font-size: 2.75rem;
-      }
-      .hero p {
-        font-size: 1.125rem;
-      }
-      section.services .container {
-        grid-template-columns: repeat(3, 1fr);
-      }
-      section.how-it-works .container {
-        flex-wrap: nowrap;
-      }
-      /* Show auth buttons on desktop */
-      .auth-buttons {
-        display: flex !important;
-      }
-    }
-
-    /* Focus visible for accessibility */
-    a:focus-visible,
-    button:focus-visible,
-    input:focus-visible {
-      outline: 2px solid #17A589;
-      outline-offset: 3px;
-    }
-
-    .logo img,
-.logo-img {
-  max-height: 60px;
-  width: auto;
-  display: block;
-}
-
-  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="assets/css/index.css">
+  
 </head>
 <body>
   <header>
     <div class="header-inner container">
      <div class="logo" tabindex="0" aria-label="Site logo and home link">
   <a href="index.html">
-    <img src="images/carrenlogo.jpeg" alt="WatamuWays Logo" class="logo-img">
+    <img src="/assets/images/carrenlogo.jpeg" alt="WatamuWays Logo" class="logo-img">
   </a>
 </div>
 
@@ -864,6 +106,298 @@
         </article>
       </div>
     </section>
+
+
+
+
+
+    <section class="featured-listings" id="featured">
+  <div class="container">
+    <h2 class="section-title">Featured Rides</h2>
+
+    <div class="filters">
+      <button class="filter-btn active" data-type="all">All</button>
+      <button class="filter-btn" data-type="tuktuk">Tuk Tuk</button>
+      <button class="filter-btn" data-type="bodaboda">Boda Boda</button>
+      <button class="filter-btn" data-type="taxi">Taxi</button>
+    </div>
+
+    <div class="listing-grid">
+      <!-- Tuk Tuk -->
+      <div class="card" data-type="tuktuk">
+        <img src="https://images.unsplash.com/photo-1602967401250-4015f4dbf1ae" alt="Tuk Tuk">
+        <div class="card-content">
+          <h3>Tuk Tuk Express</h3>
+          <p>Quick and fun local rides.</p>
+          <div class="rating">⭐⭐⭐⭐☆</div>
+          <button class="book-btn">Book Now</button>
+        </div>
+      </div>
+
+      <!-- Boda Boda -->
+      <div class="card" data-type="bodaboda">
+        <img src="https://images.unsplash.com/photo-1593141154377-f0c5f21b0a6b" alt="Boda Boda">
+        <div class="card-content">
+          <h3>Boda Rider</h3>
+          <p>Perfect for solo quick trips.</p>
+          <div class="rating">⭐⭐⭐⭐⭐</div>
+          <button class="book-btn">Book Now</button>
+        </div>
+      </div>
+
+      <!-- Taxi -->
+      <div class="card" data-type="taxi">
+        <img src="https://images.unsplash.com/photo-1581375270665-004c5d9623a3" alt="Taxi">
+        <div class="card-content">
+          <h3>Watamu Cab</h3>
+          <p>Comfortable rides for families.</p>
+          <div class="rating">⭐⭐⭐⭐☆</div>
+          <button class="book-btn">Book Now</button>
+        </div>
+      </div>
+
+
+
+      <!-- Another Tuk Tuk -->
+      <div class="card" data-type="tuktuk">
+        <img src="https://images.unsplash.com/photo-1610056404809-ff19b0ea7f76" alt="Tuk Tuk Deluxe">
+        <div class="card-content">
+          <h3>Tuk Tuk Deluxe</h3>
+          <p>Stylish and affordable travel.</p>
+          <div class="rating">⭐⭐⭐☆☆</div>
+          <button class="book-btn">Book Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.card');
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelector('.filter-btn.active').classList.remove('active');
+      btn.classList.add('active');
+
+      const type = btn.dataset.type;
+      cards.forEach(card => {
+        card.style.display = (type === 'all' || card.dataset.type === type) ? 'block' : 'none';
+      });
+    });
+  });
+  
+</script>
+
+
+
+
+<section class="top-meals-slider-section">
+  <h2 class="section-title">Top Meals & Restaurants</h2>
+
+  <div class="swiper mealsSwiper">
+    <div class="swiper-wrapper">
+
+      <div class="swiper-slide meal-slide">
+        <img src="https://images.unsplash.com/photo-1553621042-f6e147245754" alt="Swahili seafood platter" />
+        <div class="meal-details">
+          <h3>Swahili Seafood Platter</h3>
+          <p class="restaurant">Ocean Breeze Restaurant</p>
+          <p class="price">KES 1,200</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+
+      <div class="swiper-slide meal-slide">
+        <img src="https://images.unsplash.com/photo-1627308595229-7830a5c91f9f" alt="Biryani" />
+        <div class="meal-details">
+          <h3>Authentic Biryani</h3>
+          <p class="restaurant">Baharini Bistro</p>
+          <p class="price">KES 850</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+
+      <div class="swiper-slide meal-slide">
+        <img src="https://images.unsplash.com/photo-1604908177522-199ddf3b6dfd" alt="Mango juice" />
+        <div class="meal-details">
+          <h3>Fresh Mango Juice</h3>
+          <p class="restaurant">Juice & Java Watamu</p>
+          <p class="price">KES 250</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+
+    </div>
+    <!-- Navigation Arrows -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</section>
+
+<section class="top-stays-section">
+  <h2 class="section-title" data-aos="fade-down">Top Places to Stay</h2>
+
+  <div class="stay-grid">
+
+    <div class="stay-card" data-aos="fade-up" data-aos-delay="100">
+      <img src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353" alt="Beachfront Villa" />
+      <div class="stay-info">
+        <h3>Beachfront Villa</h3>
+        <p class="location">Turtle Bay, Watamu</p>
+        <p class="price">KES 10,000 / night</p>
+        <button class="book-btn">Book Now</button>
+      </div>
+    </div>
+
+    <div class="stay-card" data-aos="fade-up" data-aos-delay="200">
+      <img src="https://images.unsplash.com/photo-1590490350335-3701b2997783" alt="Luxury Cottage" />
+      <div class="stay-info">
+        <h3>Luxury Cottage</h3>
+        <p class="location">Jacaranda Beach</p>
+        <p class="price">KES 7,500 / night</p>
+        <button class="book-btn">Book Now</button>
+      </div>
+    </div>
+
+    <div class="stay-card" data-aos="fade-up" data-aos-delay="300">
+      <img src="https://images.unsplash.com/photo-1582719478186-9ff8c3f1a3da" alt="Swahili Airbnb" />
+      <div class="stay-info">
+        <h3>Swahili Style Airbnb</h3>
+        <p class="location">Watamu Village</p>
+        <p class="price">KES 4,800 / night</p>
+        <button class="book-btn">Book Now</button>
+      </div>
+    </div>
+
+    <div class="stay-card" data-aos="fade-up" data-aos-delay="400">
+      <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb" alt="Bamboo Retreat" />
+      <div class="stay-info">
+        <h3>Bamboo Retreat</h3>
+        <p class="location">Mida Creek</p>
+        <p class="price">KES 5,500 / night</p>
+        <button class="book-btn">Book Now</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<section class="why-watamu-section">
+  <h2 class="section-title" data-aos="fade-up">Why Choose <span>WatamuWays?</span></h2>
+
+  <div class="benefits-grid">
+    <div class="benefit-card" data-aos="zoom-in" data-aos-delay="100">
+      <i class="fas fa-map-marked-alt benefit-icon"></i>
+      <h3>Local Experts</h3>
+      <p>We know Watamu inside out. Get the most authentic experience from our team of locals.</p>
+    </div>
+
+    <div class="benefit-card" data-aos="zoom-in" data-aos-delay="200">
+      <i class="fas fa-wallet benefit-icon"></i>
+      <h3>Affordable Options</h3>
+      <p>From tuk-tuks to luxury villas — we offer options that suit every budget.</p>
+    </div>
+
+    <div class="benefit-card" data-aos="zoom-in" data-aos-delay="300">
+      <i class="fas fa-headset benefit-icon"></i>
+      <h3>Real-Time Support</h3>
+      <p>Chat with us instantly whenever you need help — we're here 24/7.</p>
+    </div>
+  </div>
+</section>
+
+
+<section class="testimonials-section">
+  <h2 class="section-title" data-aos="fade-up">What Our Customers Say</h2>
+
+  <div class="testimonial-carousel" data-aos="fade-up" data-aos-delay="200">
+    <div class="testimonial active">
+      <p>"WatamuWays made my trip unforgettable! The tuk-tuk was ready in minutes, and the stay was amazing!"</p>
+      <h4>– Grace M., Nairobi</h4>
+    </div>
+
+    <div class="testimonial">
+      <p>"Loved the real-time support. We needed last-minute food delivery, and they handled it like pros!"</p>
+      <h4>– Brian O., Kisumu</h4>
+    </div>
+
+    <div class="testimonial">
+      <p>"Affordable and super reliable. We booked a beach cottage and even got a free tour guide. Recommended!"</p>
+      <h4>– Aisha K., Mombasa</h4>
+    </div>
+  </div>
+
+  <div class="testimonial-nav">
+    <span class="dot active" onclick="showTestimonial(0)"></span>
+    <span class="dot" onclick="showTestimonial(1)"></span>
+    <span class="dot" onclick="showTestimonial(2)"></span>
+  </div>
+</section>
+
+
+<script>
+  let currentTestimonial = 0;
+  const testimonials = document.querySelectorAll('.testimonial');
+  const dots = document.querySelectorAll('.dot');
+
+  function showTestimonial(index) {
+    testimonials.forEach(t => t.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+
+    testimonials[index].classList.add('active');
+    dots[index].classList.add('active');
+    currentTestimonial = index;
+  }
+
+  // Auto switch every 6 seconds
+  setInterval(() => {
+    let next = (currentTestimonial + 1) % testimonials.length;
+    showTestimonial(next);
+  }, 6000);
+</script>
+
+
+
+
+
+<section class="app-download" data-aos="fade-up">
+  <div class="app-content">
+    <div class="app-text">
+      <h2>Get the <span>WatamuWays</span> App</h2>
+      <p>Book rides, order food, and find stays — all from your phone. Available soon on Android & iOS.</p>
+      <div class="store-buttons">
+        <a href="#" class="store-btn disabled">
+          <i class="fab fa-google-play"></i>
+          <span>Coming Soon<br><strong>Google Play</strong></span>
+        </a>
+        <a href="#" class="store-btn disabled">
+          <i class="fab fa-apple"></i>
+          <span>Coming Soon<br><strong>App Store</strong></span>
+        </a>
+      </div>
+    </div>
+    <div class="app-image">
+      <img src="https://cdn.pixabay.com/photo/2017/03/10/12/15/smartphone-2133430_1280.png" alt="App preview">
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
 
 
   </main>
@@ -1111,6 +645,39 @@
       closeModal(signupModal);
     });
   </script>
+
+
+
+
+<!-- Swiper JS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  const swiper = new Swiper(".mealsSwiper", {
+    slidesPerView: 1,
+    spaceBetween: 30,
+    loop: true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+      768: { slidesPerView: 2 },
+      1024: { slidesPerView: 3 }
+    }
+  });
+</script>
+
+
+
+<!-- AOS (Animate On Scroll) CSS + JS -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 1200, once: true });
+</script>
+
+
 </body>
 </html>
 
