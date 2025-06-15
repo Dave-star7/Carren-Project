@@ -374,6 +374,9 @@ section.services .container {
   user-select: none;
   color: #053B50; /* deep but not harsh blue */
 }
+ section.how-it-works h2{
+  color: #000000;
+ }
 
 section.how-it-works .container {
   max-width: 1140px;
@@ -762,11 +765,12 @@ input[type="text"]:focus {
   padding: 80px 20px;
 }
 
+
 .featured-listings .section-title {
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 48px;
-  color: #144d75; /* bluish heading */
+  color: #000000; /* bluish heading */
   font-weight: 800;
   letter-spacing: 0.02em;
 }
@@ -868,6 +872,9 @@ input[type="text"]:focus {
   margin-bottom: 40px;
   font-weight: 800;
 }
+.top-meals-slider-section h2{
+  color: #000000;
+}
 
 .mealsSwiper {
   max-width: 1100px;
@@ -939,7 +946,7 @@ input[type="text"]:focus {
 
 .section-title {
   font-size: 2.5rem;
-  color: #144d75; /* deep blue */
+  color: #000000; /* deep blue */
   text-align: center;
   margin-bottom: 40px;
   font-weight: 700;
@@ -1031,12 +1038,12 @@ input[type="text"]:focus {
 .why-watamu-section .section-title {
   font-size: 2.6rem;
   font-weight: 700;
-  color: #144d75; /* dark blue */
+  color: #000000; /* dark blue */
   margin-bottom: 50px;
 }
 
 .why-watamu-section .section-title span {
-  color: #1e5e8c; /* lighter blue accent */
+  color: #000000; /* lighter blue accent */
 }
 
 .benefits-grid {
@@ -1088,7 +1095,7 @@ input[type="text"]:focus {
 .testimonials-section .section-title {
   font-size: 2.4rem;
   font-weight: 700;
-  color: #144d75;
+  color: #000000;
   margin-bottom: 50px;
 }
 
