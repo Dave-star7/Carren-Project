@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watamu Taxi Services - Book Your Ride</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f1f5f9;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .ride-option {
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+        
+        .ride-option:hover {
+            background-color: #f0f4f8;
+        }
+        
+        .ride-option.selected {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        
+        .map-container {
+            height: 300px;
+            background-color: #e2e8f0;
+            border-radius: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .map-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #cbd5e1;
+            color: #64748b;
+        }
+        
+        .driver-card {
+            transition: all 0.3s ease;
+        }
+        
+        .driver-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background-color: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .payment-method {
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary);
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s forwards;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-taxi text-3xl text-blue-500 mr-2"></i>
+                <h1 class="text-2xl font-bold text-gray-800">Watamu<span class="text-blue-500">Taxi</span></h1>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#" class="text-blue-500 font-medium">Home</a>
+                <a href="#" class="text-gray-600 hover:text-blue-500">Services</a>
+                <a href="#" class="text-gray-600 hover:text-blue-500">Fares</a>
+                <a href="#" class="text-gray-600 hover:text-blue-500">Drivers</a>
+                <a href="#" class="text-gray-600 hover:text-blue-500">Contact</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <i class="fas fa-bell text-xl text-gray-600 cursor-pointer"></i>
+                    <div class="notification-badge">3</div>
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition">
+                    Sign In
+                </button>
+                <button class="md:hidden">
+                    <i class="fas fa-bars text-xl text-gray-600"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Booking Form -->
+    <section class="bg-white text-gray-800 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h2 class="text-4xl font-bold mb-4">Reliable Taxi Services in Watamu</h2>
+                    <p class="text-xl mb-6">Book your ride in seconds and enjoy comfortable transportation across Watamu and surrounding areas.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center bg-white bg-opacity-20 px-4 py-2 rounded-lg">
+                            <i class="fas fa-clock mr-2"></i>
+                            <span>24/7 Service</span>
+                        </div>
+                        <div class="flex items-center bg-white bg-opacity-20 px-4 py-2 rounded-lg">
+                            <i class="fas fa-shield-alt mr-2"></i>
+                            <span>Safe Rides</span>
+                        </div>
+                        <div class="flex items-center bg-white bg-opacity-20 px-4 py-2 rounded-lg">
+                            <i class="fas fa-money-bill-wave mr-2"></i>
+                            <span>Affordable Prices</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 bg-white rounded-xl shadow-xl p-6 text-gray-800">
+                    <form id="bookingForm">
+                        <div class="relative mb-2">
+                            <input type="text" id="pickup" class="w-full p-4 border-b border-gray-200 pl-10" placeholder="Enter pickup location" required>
+                            <i class="fas fa-map-marker-alt absolute left-3 top-5 text-blue-500"></i>
+                        </div>
+                        <div class="relative mb-4">
+                            <input type="text" id="destination" class="w-full p-4 border-b border-gray-200 pl-10" placeholder="Where to?" required>
+                            <i class="fas fa-flag absolute left-3 top-5 text-gray-400"></i>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-2 mb-6">
+                            <button type="button" class="ride-option bg-gray-100 p-3 rounded-lg text-left" data-type="standard">
+                                <i class="fas fa-car text-blue-500 mr-2"></i>
+                                <div>
+                                    <h4 class="font-bold">Standard</h4>
+                                    <p class="text-sm text-gray-500">KSh 50/km</p>
+                                </div>
+                            </button>
+                            <button type="button" class="ride-option bg-gray-100 p-3 rounded-lg text-left" data-type="xl">
+                                <i class="fas fa-car text-blue-500 mr-2"></i>
+                                <div>
+                                    <h4 class="font-bold">XL</h4>
+                                    <p class="text-sm text-gray-500">KSh 70/km</p>
+                                </div>
+                            </button>
+                            <button type="button" class="ride-option bg-gray-100 p-3 rounded-lg text-left" data-type="premium">
+                                <i class="fas fa-car text-blue-500 mr-2"></i>
+                                <div>
+                                    <h4 class="font-bold">Premium</h4>
+                                    <p class="text-sm text-gray-500">KSh 100/km</p>
+                                </div>
+                            </button>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-sm text-gray-600">Estimated fare</p>
+                                    <p class="font-bold text-lg" id="dynamicFare">KSh 0</p>
+                                </div>
+                                <button type="submit" class="bg-black hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-medium transition">
+                                    Confirm Ride
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fare Calculator Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Fare Estimation Calculator</h2>
+            <div class="max-w-3xl mx-auto bg-gray-50 rounded-xl shadow-md p-6">
+                <script>
+                    // Uber-like fare calculation
+                    const ridePrices = {
+                        standard: { base: 300, perKm: 50, perMin: 5 },
+                        xl: { base: 400, perKm: 70, perMin: 7 },
+                        premium: { base: 500, perKm: 100, perMin: 10 }
+                    };
+                    
+                    let selectedRideType = 'standard';
+                    
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // Ride type selection
+                        const rideOptions = document.querySelectorAll('.ride-option');
+                        rideOptions.forEach(option => {
+                            option.addEventListener('click', function() {
+                                rideOptions.forEach(opt => opt.classList.remove('border-2', 'border-blue-500', 'bg-blue-50'));
+                                this.classList.add('border-2', 'border-blue-500', 'bg-blue-50');
+                                selectedRideType = this.dataset.type;
+                                updateFareEstimate();
+                            });
+                        });
+                        
+                        // Initialize first option as selected
+                        rideOptions[0].classList.add('border-2', 'border-blue-500', 'bg-blue-50');
+                        
+                        // Mock fare calculation based on distance
+                        function updateFareEstimate() {
+                            const price = ridePrices[selectedRideType];
+                            // In a real app, this would use actual distance from map API
+                            const distanceKm = 5; // Example distance
+                            const timeMin = 15; // Example time
+                            
+                            const fare = price.base + (distanceKm * price.perKm) + (timeMin * price.perMin);
+                            document.getElementById('dynamicFare').textContent = `KSh ${fare.toFixed(0)}`;
+                        }
+                        
+                        // Initial fare estimate
+                        updateFareEstimate();
+                    });
+                </script>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="fare-card bg-white p-4 rounded-lg">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-road text-blue-500"></i>
+                            </div>
+                            <h3 class="font-bold text-gray-800">By Distance</h3>
+                        </div>
+                        <div class="mb-3">
+                            <label class="block text-gray-600 mb-1">Distance (km)</label>
+                            <input type="range" id="distanceRange" min="1" max="50" value="10" class="w-full">
+                            <div class="flex justify-between text-sm text-gray-500">
+                                <span>1 km</span>
+                                <span id="distanceValue">10 km</span>
+                                <span>50 km</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-gray-600">Estimated Fare</p>
+                            <p class="text-2xl font-bold text-blue-500">KSh <span id="distanceFare">800</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="fare-card bg-white p-4 rounded-lg">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-clock text-green-500"></i>
+                            </div>
+                            <h3 class="font-bold text-gray-800">By Time</h3>
+                        </div>
+                        <div class="mb-3">
+                            <label class="block text-gray-600 mb-1">Duration (hours)</label>
+                            <input type="range" id="timeRange" min="0.5" max="8" step="0.5" value="1" class="w-full">
+                            <div class="flex justify-between text-sm text-gray-500">
+                                <span>0.5 hr</span>
+                                <span id="timeValue">1 hr</span>
+                                <span>8 hrs</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-gray-600">Estimated Fare</p>
+                            <p class="text-2xl font-bold text-green-500">KSh <span id="timeFare">600</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="fare-card bg-white p-4 rounded-lg">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-purple-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-map-marker-alt text-purple-500"></i>
+                            </div>
+                            <h3 class="font-bold text-gray-800">Popular Routes</h3>
+                        </div>
+                        <div class="mb-3">
+                            <label class="block text-gray-600 mb-1">Select Route</label>
+                            <select id="popularRoute" class="w-full p-2 border border-gray-300 rounded-lg">
+                                <option value="watamu_airport">Watamu to Malindi Airport</option>
+                                <option value="watamu_malindi">Watamu to Malindi Town</option>
+                                <option value="watamu_mombasa">Watamu to Mombasa</option>
+                                <option value="watamu_lamu">Watamu to Lamu</option>
+                                <option value="watamu_garoda">Watamu to Garoda Beach</option>
+                            </select>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-gray-600">Estimated Fare</p>
+                            <p class="text-2xl font-bold text-purple-500">KSh <span id="routeFare">1200</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <p class="text-gray-600">Base fare: KSh 300 + KSh 50 per km + KSh 500 per hour waiting time</p>
+                    <p class="text-sm text-gray-500 mt-2">*Fares are estimates and may vary based on traffic and other factors</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Process Section -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="text-center p-6 bg-white rounded-xl shadow-sm">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-map-marked-alt text-blue-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">1. Book Your Ride</h3>
+                    <p class="text-gray-600">Enter your pickup and destination locations to book your taxi.</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-xl shadow-sm">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-bell text-green-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">2. Driver Notification</h3>
+                    <p class="text-gray-600">Nearest available driver and admin receive instant notifications.</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-xl shadow-sm">
+                    <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-check-circle text-yellow-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">3. Ride Confirmation</h3>
+                    <p class="text-gray-600">Driver confirms the ride and arrives at your location.</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-xl shadow-sm">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-money-bill-wave text-purple-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">4. Payment & Completion</h3>
+                    <p class="text-gray-600">Pay securely via M-Pesa. Ride ends when destination is reached.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ride Status Modal (Hidden by default) -->
+    <div id="rideStatusModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-xl w-full max-w-md mx-4 slide-in">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">Your Ride Status</h3>
+                    <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2 text-sm text-gray-600">
+                        <span>Ride ID: #WTX-<span id="rideId">78945</span></span>
+                        <span id="rideTime">Today, 3:30 PM</span>
+                    </div>
+                    
+                    <div class="progress-bar mb-4">
+                        <div id="progressFill" class="progress-fill" style="width: 25%;"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-4 text-center text-xs text-gray-500">
+                        <div class="flex flex-col items-center">
+                            <div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white mb-1">
+                                <i class="fas fa-check text-xs"></i>
+                            </div>
+                            <span>Booked</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div id="driverAssignedStep" class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center mb-1">
+                                <i class="fas fa-check text-xs hidden"></i>
+                            </div>
+                            <span>Driver Assigned</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div id="onTheWayStep" class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center mb-1">
+                                <i class="fas fa-check text-xs hidden"></i>
+                            </div>
+                            <span>On The Way</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div id="completedStep" class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center mb-1">
+                                <i class="fas fa-check text-xs hidden"></i>
+                            </div>
+                            <span>Completed</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="driver-card bg-gray-50 p-4 rounded-lg mb-4">
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="Driver" class="w-12 h-12 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-bold" id="driverName">John Mwangi</h4>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <span id="driverRating">4.8</span>
+                                <span class="mx-2">|</span>
+                                <span id="driverTrips">1,240 trips</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 flex justify-between items-center">
+                        <div>
+                            <span class="text-sm text-gray-600">Vehicle:</span>
+                            <span class="font-medium" id="driverVehicle">Toyota Corolla (KCR 234A)</span>
+                        </div>
+                        <a href="tel:+254712345678" class="bg-blue-500 text-white p-2 rounded-full">
+                            <i class="fas fa-phone"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="map-container mb-4">
+                    <div class="map-placeholder">
+                        <i class="fas fa-map-marked-alt text-4xl"></i>
+                        <span class="ml-2">Live Map View</span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="bg-gray-50 p-3 rounded-lg">
+                        <p class="text-sm text-gray-600">Pickup</p>
+                        <p class="font-medium" id="modalPickup">Watamu Beach</p>
+                    </div>
+                    <div class="bg-gray-50 p-3 rounded-lg">
+                        <p class="text-sm text-gray-600">Destination</p>
+                        <p class="font-medium" id="modalDestination">Malindi Airport</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-3 rounded-lg mb-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-sm text-gray-600">Estimated Fare</p>
+                            <p class="font-bold text-lg" id="modalFare">KSh 1,200</p>
+                        </div>
+                        <button id="paymentButton" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition">
+                            Pay Now
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button id="cancelRide" class="text-red-500 hover:text-red-700 font-medium">
+                        <i class="fas fa-times-circle mr-1"></i> Cancel Ride
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal (Hidden by default) -->
+    <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-xl w-full max-w-md mx-4 slide-in">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">Complete Payment</h3>
+                    <button id="closePaymentModal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-medium">Total Amount:</span>
+                            <span class="font-bold text-lg" id="paymentAmount">KSh 1,200</span>
+                        </div>
+                        <div class="text-sm text-gray-600">
+                            <p>Ride ID: #WTX-<span id="paymentRideId">78945</span></p>
+                            <p>Driver: <span id="paymentDriver">John Mwangi</span></p>
+                        </div>
+                    </div>
+                    
+                    <h4 class="font-bold mb-3">Select Payment Method</h4>
+                    <div class="space-y-3 mb-4">
+                        <div class="payment-method p-3 rounded-lg cursor-pointer" data-method="mpesa">
+                            <div class="flex items-center">
+                                <div class="bg-green-100 p-2 rounded-full mr-3">
+                                    <i class="fas fa-mobile-alt text-green-500"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium">M-Pesa</h5>
+                                    <p class="text-sm text-gray-600">Pay via M-Pesa mobile money</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment-method p-3 rounded-lg cursor-pointer" data-method="cash">
+                            <div class="flex items-center">
+                                <div class="bg-yellow-100 p-2 rounded-full mr-3">
+                                    <i class="fas fa-money-bill-wave text-yellow-500"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium">Cash</h5>
+                                    <p class="text-sm text-gray-600">Pay in cash to the driver</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="mpesaPayment" class="hidden">
+                        <div class="mb-3">
+                            <label class="block text-gray-700 mb-2">M-Pesa Number</label>
+                            <input type="tel" id="mpesaNumber" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="07XXXXXXXX">
+                        </div>
+                        <button id="confirmMpesa" class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-medium transition">
+                            Send Payment Request
+                        </button>
+                        <p class="text-sm text-gray-500 mt-2">You will receive an M-Pesa prompt on your phone to complete payment</p>
+                    </div>
+                    
+                    <div id="cashPayment" class="hidden">
+                        <div class="bg-yellow-50 p-4 rounded-lg mb-3">
+                            <p class="text-yellow-700">Please have exact change ready for the driver. The fare is <span class="font-bold">KSh 1,200</span>.</p>
+                        </div>
+                        <button id="confirmCash" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg font-medium transition">
+                            Confirm Cash Payment
+                        </button>
+                    </div>
+                    
+                    <div id="paymentSuccess" class="hidden text-center py-6">
+                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-check text-green-500 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">Payment Successful!</h4>
+                        <p class="text-gray-600 mb-4
+</html>

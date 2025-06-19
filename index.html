@@ -47,6 +47,56 @@
     </nav>
   </header>
 
+
+  
+
+
+  <!-- 🌟 User Account Action Bar -->
+<div class="user-action-bar">
+  <div class="left-section">
+    <span class="logo-text">👋 Welcome back, David</span>
+  </div>
+  <div class="right-section">
+    <div class="account-dropdown-wrapper">
+      <div class="account-toggle" id="accountToggle">
+        <i class="fas fa-user-circle"></i> My Account <i class="fas fa-chevron-down"></i>
+      </div>
+      <ul class="account-dropdown" id="accountDropdown">
+        <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+        <li><a href="orders.html"><i class="fas fa-box"></i> My Orders</a></li>
+        <li><a href="bookings.html"><i class="fas fa-car"></i> My Bookings</a></li>
+        <li><a href="#"><i class="fas fa-question-circle"></i> Help</a></li>
+        <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  document.getElementById('accountToggle').addEventListener('click', function () {
+    document.getElementById('accountDropdown').classList.toggle('show');
+  });
+
+  document.addEventListener('click', function (event) {
+    const toggle = document.getElementById('accountToggle');
+    const dropdown = document.getElementById('accountDropdown');
+    if (!toggle.contains(event.target) && !dropdown.contains(event.target)) {
+      dropdown.classList.remove('show');
+    }
+  });
+</script>
+
+<style>
+  .account-dropdown.show {
+    display: block;
+  }
+</style>
+
+
+
+  
+
   <main>
     <section class="hero" role="region" aria-label="Main introduction">
       <h1>Seamlessly Book Rides, Order Food & Find Your Ideal Stay</h1>

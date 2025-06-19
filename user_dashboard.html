@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Multi-Service Booking Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <link rel="stylesheet" href="assets/css/user_dashboard.css">
+  
+</head>
+<body>
+  <header>
+    <div class="header-inner container">
+     <div class="logo" tabindex="0" aria-label="Site logo and home link">
+  <a href="index.html">
+    <img src="/assets/images/new_logo.jpeg" alt="WatamuWays Logo" class="logo-img">
+  </a>
+</div>
+
+      <nav class="primary-nav" role="navigation" aria-label="Primary navigation">
+        <a href="#book-ride" tabindex="0">Book a Ride</a>
+        <a href="#order-food" tabindex="0">Order Food</a>
+        <a href="#find-stay" tabindex="0">Find a Stay</a>
+        <a href="#about" tabindex="0">About</a>
+        <a href="#contact" tabindex="0">Contact</a>
+      </nav>
+      <div class="auth-buttons">
+        <button class="auth-btn" id="login-btn" aria-haspopup="dialog" aria-controls="login-modal">Login</button>
+        <button class="auth-btn" id="signup-btn" aria-haspopup="dialog" aria-controls="signup-modal">Sign Up</button>
+      </div>
+      <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="material-icons">menu</span>
+      </button>
+    </div>
+    <nav class="nav-mobile" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+      <a href="#book-ride" tabindex="-1">Book a Ride</a>
+      <a href="#order-food" tabindex="-1">Order Food</a>
+      <a href="#find-stay" tabindex="-1">Find a Stay</a>
+      <a href="#about" tabindex="-1">About</a>
+      <a href="#contact" tabindex="-1">Contact</a>
+      <a href="#" id="mobile-login-link" tabindex="-1">Login</a>
+      <a href="#" id="mobile-signup-link" tabindex="-1">Sign Up</a>
+    </nav>
+  </header>
+
+
+
+  
+  <!-- 🔷 Dashboard Header -->
+  <header class="dashboard-header">
+    <div class="logo">Watamu Services</div>
+    <div class="dashboard-nav">
+      <span class="welcome-msg">Welcome, David</span>
+      <a href="profile.html" title="Profile" class="profile-btn"><i class="fas fa-user-circle"></i></a>
+      <button class="logout-btn">Logout</button>
+    </div>
+  </header>
+
+  <!-- 🧩 Dashboard Main -->
+  <main class="dashboard-main">
+    <h1 class="dashboard-title">Your Dashboard</h1>
+
+    <div class="dashboard-cards">
+      <a href="book-ride.html" class="dashboard-card">
+        <i class="fas fa-car"></i>
+        <h3>My Rides</h3>
+        <p>View and manage your ride bookings.</p>
+      </a>
+
+      <a href="order-food.html" class="dashboard-card">
+        <i class="fas fa-utensils"></i>
+        <h3>Food Orders</h3>
+        <p>Track your food deliveries.</p>
+      </a>
+
+      <a href="find-stay.html" class="dashboard-card">
+        <i class="fas fa-hotel"></i>
+        <h3>Stays</h3>
+        <p>Manage your accommodation in Watamu.</p>
+      </a>
+    </div>
+
+
+
+
+
+
+    <!-- Add inside your dashboard HTML file, after the dashboard-cards section -->
+
+<section class="dashboard-notifications">
+  <h2>🔔 Notifications</h2>
+  <ul class="notifications-list">
+    <li><i class="fas fa-check-circle"></i> Your ride to Temple Rd is confirmed.</li>
+    <li><i class="fas fa-hamburger"></i> Your food order from Crab Shack is on the way.</li>
+    <li><i class="fas fa-bed"></i> Your booking for Blue Lagoon Resort was successful.</li>
+  </ul>
+</section>
+
+<section class="booking-summaries">
+  <h2>📋 Recent Bookings</h2>
+  <div class="summary-cards">
+    <div class="summary-card">
+      <h3>Taxi Ride</h3>
+      <p><strong>From:</strong> Watamu Beach</p>
+      <p><strong>To:</strong> Turtle Bay</p>
+      <p><strong>Date:</strong> June 18, 2025</p>
+    </div>
+
+    <div class="summary-card">
+      <h3>Food Order</h3>
+      <p><strong>From:</strong> Bahari Bites</p>
+      <p><strong>Items:</strong> Seafood Platter, Mango Juice</p>
+      <p><strong>Status:</strong> Delivered</p>
+    </div>
+
+    <div class="summary-card">
+      <h3>Stay Booking</h3>
+      <p><strong>Location:</strong> Blue Bay Villas</p>
+      <p><strong>Check-in:</strong> June 20</p>
+      <p><strong>Check-out:</strong> June 23</p>
+    </div>
+  </div>
+</section>
+
+<section class="profile-edit">
+  <h2>👤 Edit Profile</h2>
+  <form class="profile-form">
+    <input type="text" placeholder="Full Name" value="David Mutia" />
+    <input type="email" placeholder="Email Address" value="david@example.com" />
+    <input type="tel" placeholder="Phone Number" value="+2547XXXXXXXX" />
+    <button type="submit">Update Profile</button>
+  </form>
+</section>
+
+  </main>
+
+
+
+
+
+  <footer>
+    <div class="footer-container">
+      <section class="footer-section" aria-labelledby="footer-company">
+        <h4 id="footer-company">Company</h4>
+        <a href="#about" tabindex="0">About Us</a>
+        <a href="#careers" tabindex="0">Careers</a>
+        <a href="#blog" tabindex="0">Blog</a>
+      </section>
+      <section class="footer-section" aria-labelledby="footer-support">
+        <h4 id="footer-support">Support</h4>
+        <a href="#help" tabindex="0">Help Center</a>
+        <a href="#contact" tabindex="0">Contact Us</a>
+        <a href="#terms" tabindex="0">Terms of Service</a>
+        <a href="#privacy" tabindex="0">Privacy Policy</a>
+      </section>
+      <section class="footer-section" aria-labelledby="footer-social">
+  <h4 id="footer-social">Follow Us</h4>
+  <div class="social-icons">
+    <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" tabindex="0">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" tabindex="0">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter (X)" tabindex="0">
+      <i class="fab fa-x-twitter"></i>
+    </a>
+    <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok" tabindex="0">
+      <i class="fab fa-tiktok"></i>
+    </a>
+  </div>
+</section>
+
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-modal-title" tabindex="-1">
+    <div class="modal">
+      <button class="close-modal-btn" aria-label="Close login form" id="close-login-modal">&times;</button>
+      <h2 id="login-modal-title">Login</h2>
+      <form id="login-form" novalidate>
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" name="login-email" required autocomplete="username" placeholder="you@example.com" />
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" name="login-password" required autocomplete="current-password" placeholder="Enter password" minlength="6" />
+        <button type="submit" class="modal-submit-btn">Login</button>
+      </form>
+      <p class="modal-footer-text">
+        Don't have an account?
+        <button type="button" id="to-signup-btn">Sign Up</button>
+      </p>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+  <div class="modal-overlay" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-modal-title" tabindex="-1">
+    <div class="modal">
+      <button class="close-modal-btn" aria-label="Close signup form" id="close-signup-modal">&times;</button>
+      <h2 id="signup-modal-title">Sign Up</h2>
+      <form id="signup-form" novalidate>
+        <label for="signup-name">Full Name</label>
+        <input type="text" id="signup-name" name="signup-name" required autocomplete="name" placeholder="Your full name" minlength="2" />
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" name="signup-email" required autocomplete="email" placeholder="you@example.com" />
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" name="signup-password" required autocomplete="new-password" placeholder="Create a password" minlength="6" />
+        <button type="submit" class="modal-submit-btn">Sign Up</button>
+      </form>
+      <p class="modal-footer-text">
+        Already have an account?
+        <button type="button" id="to-login-btn">Login</button>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Mobile menu toggle logic
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mobileMenu = document.querySelector('.nav-mobile');
+
+    menuToggle.addEventListener('click', () => {
+      const expanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+      menuToggle.setAttribute('aria-expanded', !expanded);
+      mobileMenu.classList.toggle('show');
+
+      // Manage tabindex for accessibility
+      const links = mobileMenu.querySelectorAll('a');
+      links.forEach(link => {
+        link.tabIndex = !expanded ? 0 : -1;
+      });
+    });
+
+    // Accessibility improvement: Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('show');
+        menuToggle.setAttribute('aria-expanded', false);
+        mobileMenu.querySelectorAll('a').forEach(a => a.tabIndex = -1);
+      });
+    });
+
+    // Initial disable mobile nav links tabindex (for screen readers)
+    mobileMenu.querySelectorAll('a').forEach(a => a.tabIndex = -1);
+
+    // Example button click handlers for demonstration (replace with actual routing or functionality)
+    document.getElementById('btn-ride').addEventListener('click', () => {
+      alert('Navigate to Book a Ride page');
+    });
+    document.getElementById('btn-food').addEventListener('click', () => {
+      alert('Navigate to Order Food page');
+    });
+    document.getElementById('btn-stay').addEventListener('click', () => {
+      alert('Navigate to Find a Stay page');
+    });
+    document.getElementById('service-ride').addEventListener('click', () => {
+      alert('Get started with Booking a Ride');
+    });
+    document.getElementById('service-food').addEventListener('click', () => {
+      alert('Get started with Ordering Food');
+    });
+    document.getElementById('service-stay').addEventListener('click', () => {
+      alert('Get started with Finding a Stay');
+    });
+
+    // Modal elements
+    const loginBtn = document.getElementById('login-btn');
+    const signupBtn = document.getElementById('signup-btn');
+    const loginModal = document.getElementById('login-modal');
+    const signupModal = document.getElementById('signup-modal');
+    const closeLoginBtn = document.getElementById('close-login-modal');
+    const closeSignupBtn = document.getElementById('close-signup-modal');
+    const toSignupBtn = document.getElementById('to-signup-btn');
+    const toLoginBtn = document.getElementById('to-login-btn');
+    const mobileLoginLink = document.getElementById('mobile-login-link');
+    const mobileSignupLink = document.getElementById('mobile-signup-link');
+
+    // Open login modal
+    loginBtn.addEventListener('click', () => openModal(loginModal));
+    mobileLoginLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeModal(mobileMenu);
+      openModal(loginModal);
+    });
+
+    // Open signup modal
+    signupBtn.addEventListener('click', () => openModal(signupModal));
+    mobileSignupLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeModal(mobileMenu);
+      openModal(signupModal);
+    });
+
+    // Close modals
+    closeLoginBtn.addEventListener('click', () => closeModal(loginModal));
+    closeSignupBtn.addEventListener('click', () => closeModal(signupModal));
+
+    // Switch modals from inside
+    toSignupBtn.addEventListener('click', () => {
+      closeModal(loginModal);
+      openModal(signupModal);
+    });
+    toLoginBtn.addEventListener('click', () => {
+      closeModal(signupModal);
+      openModal(loginModal);
+    });
+
+    // Close modal on outside click or ESC
+    [loginModal, signupModal].forEach(modal => {
+      modal.addEventListener('click', (event) => {
+        if(event.target === modal) {
+          closeModal(modal);
+        }
+      });
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        if(loginModal.classList.contains('show')) closeModal(loginModal);
+        if(signupModal.classList.contains('show')) closeModal(signupModal);
+      }
+    });
+
+    // Trap focus inside modal for accessibility
+    function trapFocus(element) {
+      const focusableElements = element.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])');
+      if(focusableElements.length === 0) return;
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length -1];
+
+      element.addEventListener('keydown', function trap(e) {
+        if (e.key === 'Tab') {
+          if (e.shiftKey) {
+            if (document.activeElement === firstElement) {
+              e.preventDefault();
+              lastElement.focus();
+            }
+          } else {
+            if (document.activeElement === lastElement) {
+              e.preventDefault();
+              firstElement.focus();
+            }
+          }
+        }
+      }, {capture: true});
+
+      firstElement.focus();
+    }
+
+    function openModal(modal) {
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+      trapFocus(modal);
+    }
+
+    function closeModal(modal) {
+      modal.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    // Form submissions with simple validation simulation
+    const loginForm = document.getElementById('login-form');
+    loginForm.addEventListener('submit', e => {
+      e.preventDefault();
+      // Basic validation
+      const email = loginForm['login-email'].value.trim();
+      const pass = loginForm['login-password'].value.trim();
+      if(!email || !pass) {
+        alert('Please fill in all fields.');
+        return;
+      }
+      alert('Login submitted\nEmail: ' + email);
+      loginForm.reset();
+      closeModal(loginModal);
+    });
+
+    const signupForm = document.getElementById('signup-form');
+    signupForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = signupForm['signup-name'].value.trim();
+      const email = signupForm['signup-email'].value.trim();
+      const pass = signupForm['signup-password'].value.trim();
+      if(!name || !email || !pass) {
+        alert('Please fill in all fields.');
+        return;
+      }
+      alert('Signup submitted\nName: ' + name + '\nEmail: ' + email);
+      signupForm.reset();
+      closeModal(signupModal);
+    });
+  </script>
+
+
+
+
+<!-- Swiper JS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  const swiper = new Swiper(".mealsSwiper", {
+    slidesPerView: 1,
+    spaceBetween: 30,
+    loop: true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+      768: { slidesPerView: 2 },
+      1024: { slidesPerView: 3 }
+    }
+  });
+</script>
+
+
+
+<!-- AOS (Animate On Scroll) CSS + JS -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 1200, once: true });
+</script>
+
+
+</body>
+</html>
+
