@@ -1333,3 +1333,18 @@ input[type="text"]:focus {
 
 
 
+/* Remove column layout for mobile */
+@media (max-width: 600px) {
+  .user-action-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .right-section {
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+  }
+}

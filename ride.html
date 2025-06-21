@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Multi-Service Booking Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVlM1k58aiWlFY3YMoAIaaTo7s1Hrr0Rg&libraries=places"></script>
+
+
+
+  <link rel="stylesheet" href="assets/css/book_ride.css">
+
+  <style>
+      
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .ride-option {
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+        
+        .ride-option:hover {
+            background-color: #f0f4f8;
+        }
+        
+        .ride-option.selected {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        
+        .map-container {
+            height: 300px;
+            background-color: #e2e8f0;
+            border-radius: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .map-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #cbd5e1;
+            color: #64748b;
+        }
+        
+        .driver-card {
+            transition: all 0.3s ease;
+        }
+        
+        .driver-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background-color: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .payment-method {
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary);
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s forwards;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+  </style>
+  
+</head>
+<body>
+  <header>
+    <div class="header-inner container">
+     <div class="logo" tabindex="0" aria-label="Site logo and home link">
+  <a href="index.html">
+    <img src="/assets/images/new_logo.jpeg" alt="WatamuWays Logo" class="logo-img">
+  </a>
+</div>
+
+      <nav class="primary-nav" role="navigation" aria-label="Primary navigation">
+        <a href="#book-ride" tabindex="0">Book a Ride</a>
+        <a href="#order-food" tabindex="0">Order Food</a>
+        <a href="#find-stay" tabindex="0">Find a Stay</a>
+        <a href="#about" tabindex="0">About</a>
+        <a href="#contact" tabindex="0">Contact</a>
+      </nav>
+      <div class="auth-buttons">
+        <button class="auth-btn" id="login-btn" aria-haspopup="dialog" aria-controls="login-modal">Login</button>
+        <button class="auth-btn" id="signup-btn" aria-haspopup="dialog" aria-controls="signup-modal">Sign Up</button>
+      </div>
+      <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="material-icons">menu</span>
+      </button>
+    </div>
+    <nav class="nav-mobile" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+      <a href="#book-ride" tabindex="-1">Book a Ride</a>
+      <a href="#order-food" tabindex="-1">Order Food</a>
+      <a href="#find-stay" tabindex="-1">Find a Stay</a>
+      <a href="#about" tabindex="-1">About</a>
+      <a href="#contact" tabindex="-1">Contact</a>
+      <a href="#" id="mobile-login-link" tabindex="-1">Login</a>
+      <a href="#" id="mobile-signup-link" tabindex="-1">Sign Up</a>
+    </nav>
+  </header>
+
+
+  
+
+
+  <!-- 🌟 User Account Action Bar -->
+<div class="user-action-bar">
+  <div class="left-section">
+    <span class="logo-text">👋 Welcome back, David</span>
+  </div>
+  <div class="right-section">
+    <div class="account-dropdown-wrapper">
+      <div class="account-toggle" id="accountToggle">
+        <i class="fas fa-user-circle"></i> My Account <i class="fas fa-chevron-down"></i>
+      </div>
+      <ul class="account-dropdown" id="accountDropdown">
+        <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+        <li><a href="orders.html"><i class="fas fa-box"></i> My Orders</a></li>
+        <li><a href="bookings.html"><i class="fas fa-car"></i> My Bookings</a></li>
+        <li><a href="#"><i class="fas fa-question-circle"></i> Help</a></li>
+        <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  document.getElementById('accountToggle').addEventListener('click', function () {
+    document.getElementById('accountDropdown').classList.toggle('show');
+  });
+
+  document.addEventListener('click', function (event) {
+    const toggle = document.getElementById('accountToggle');
+    const dropdown = document.getElementById('accountDropdown');
+    if (!toggle.contains(event.target) && !dropdown.contains(event.target)) {
+      dropdown.classList.remove('show');
+    }
+  });
+</script>
+
+<style>
+  .account-dropdown.show {
+    display: block;
+  }
+</style>
+
+
+
+
+
+<!-- Load Google Maps JS API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVlM1k58aiWlFY3YMoAIaaTo7s1Hrr0Rg&libraries=places"></script>
+
+
+<!-- Booking Form Logic Integration -->
+<script>
+  function initAutocomplete() {
+    const pickupInput = document.getElementById('pickup');
+    const destinationInput = document.getElementById('destination');
+
+    const pickupAutocomplete = new google.maps.places.Autocomplete(pickupInput);
+    const destinationAutocomplete = new google.maps.places.Autocomplete(destinationInput);
+
+    let pickupCoords = null;
+    let destinationCoords = null;
+
+    pickupAutocomplete.addListener('place_changed', () => {
+      const place = pickupAutocomplete.getPlace();
+      if (place.geometry) {
+        pickupCoords = place.geometry.location;
+        calculateDistanceAndFare();
+      }
+    });
+
+    destinationAutocomplete.addListener('place_changed', () => {
+      const place = destinationAutocomplete.getPlace();
+      if (place.geometry) {
+        destinationCoords = place.geometry.location;
+        calculateDistanceAndFare();
+      }
+    });
+
+    function calculateDistanceAndFare() {
+      if (!pickupCoords || !destinationCoords) return;
+
+      const service = new google.maps.DistanceMatrixService();
+      service.getDistanceMatrix({
+        origins: [pickupCoords],
+        destinations: [destinationCoords],
+        travelMode: 'DRIVING'
+      }, (response, status) => {
+        if (status === 'OK') {
+          const distanceText = response.rows[0].elements[0].distance.text;
+          const durationText = response.rows[0].elements[0].duration.text;
+
+          const distanceKm = parseFloat(distanceText.replace(' km', '').replace(',', ''));
+          const durationMin = parseFloat(durationText.replace(' mins', '').replace(' min', '').replace(',', ''));
+
+          const price = ridePrices[selectedRideType];
+          const fare = price.base + (distanceKm * price.perKm) + (durationMin * price.perMin);
+          document.getElementById('dynamicFare').textContent = `KSh ${fare.toFixed(0)}`;
+        }
+      });
+    }
+  }
+
+  window.addEventListener('load', initAutocomplete);
+</script>
+
+<!-- The rest of your HTML content remains unchanged below this line -->
+
+<!-- Hero Section with Booking Form -->
+<section class="bg-white text-gray-800 py-8">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col md:flex-row items-center">
+      <div class="md:w-1/2 mb-8 md:mb-0">
+        <h2 class="text-4xl font-bold mb-4">Reliable Taxi Services in Watamu</h2>
+        <p class="text-xl mb-6">Book your ride in seconds and enjoy comfortable transportation across Watamu and surrounding areas.</p>
+        <div class="flex flex-wrap gap-4">
+          <div class="flex items-center bg-white bg-opacity-20 px-4 py-2 rounded-lg">
+            <i class="fas fa-clock mr-2"></i>
+            <span>24/7 Service</span>
+          </div>
+          <div class="flex items-center bg-white bg-opacity-20 px-4 py-2 rounded-lg">
+            <i class="fas fa-shield-alt mr-2"></i>
+            <span>Safe Rides</span>
+          </div>
+          <div class="flex items-center bg-white bg-opacity-20 px-4 py-2 rounded-lg">
+            <i class="fas fa-money-bill-wave mr-2"></i>
+            <span>Affordable Prices</span>
+          </div>
+        </div>
+      </div>
+      <div class="md:w-1/2 bg-white rounded-xl shadow-xl p-6 text-gray-800">
+        <form id="bookingForm">
+          <div class="relative mb-2">
+            <input type="text" id="pickup" class="w-full p-4 border-b border-gray-200 pl-10" placeholder="Enter pickup location" required>
+            <i class="fas fa-map-marker-alt absolute left-3 top-5 text-blue-500"></i>
+          </div>
+          <div class="relative mb-4">
+            <input type="text" id="destination" class="w-full p-4 border-b border-gray-200 pl-10" placeholder="Where to?" required>
+            <i class="fas fa-flag absolute left-3 top-5 text-gray-400"></i>
+          </div>
+          <div class="grid grid-cols-3 gap-2 mb-6">
+            <button type="button" class="ride-option bg-gray-100 p-3 rounded-lg text-left" data-type="standard">
+              <i class="fas fa-car text-blue-500 mr-2"></i>
+              <div>
+                <h4 class="font-bold">Standard</h4>
+                <p class="text-sm text-gray-500">KSh 50/km</p>
+              </div>
+            </button>
+            <button type="button" class="ride-option bg-gray-100 p-3 rounded-lg text-left" data-type="xl">
+              <i class="fas fa-car text-blue-500 mr-2"></i>
+              <div>
+                <h4 class="font-bold">XL</h4>
+                <p class="text-sm text-gray-500">KSh 70/km</p>
+              </div>
+            </button>
+            <button type="button" class="ride-option bg-gray-100 p-3 rounded-lg text-left" data-type="premium">
+              <i class="fas fa-car text-blue-500 mr-2"></i>
+              <div>
+                <h4 class="font-bold">Premium</h4>
+                <p class="text-sm text-gray-500">KSh 100/km</p>
+              </div>
+            </button>
+          </div>
+          <div class="bg-blue-50 p-4 rounded-lg mb-4">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="text-sm text-gray-600">Estimated fare</p>
+                <p class="font-bold text-lg" id="dynamicFare">KSh 0</p>
+              </div>
+              <button type="submit" class="bg-black hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-medium transition">
+                Confirm Ride
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Keep the rest of your page as it was -->
+
+
+
+
+  <footer>
+    <div class="footer-container">
+      <section class="footer-section" aria-labelledby="footer-company">
+        <h4 id="footer-company">Company</h4>
+        <a href="#about" tabindex="0">About Us</a>
+        <a href="#careers" tabindex="0">Careers</a>
+        <a href="#blog" tabindex="0">Blog</a>
+      </section>
+      <section class="footer-section" aria-labelledby="footer-support">
+        <h4 id="footer-support">Support</h4>
+        <a href="#help" tabindex="0">Help Center</a>
+        <a href="#contact" tabindex="0">Contact Us</a>
+        <a href="#terms" tabindex="0">Terms of Service</a>
+        <a href="#privacy" tabindex="0">Privacy Policy</a>
+      </section>
+      <section class="footer-section" aria-labelledby="footer-social">
+  <h4 id="footer-social">Follow Us</h4>
+  <div class="social-icons">
+    <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" tabindex="0">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" tabindex="0">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter (X)" tabindex="0">
+      <i class="fab fa-x-twitter"></i>
+    </a>
+    <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok" tabindex="0">
+      <i class="fab fa-tiktok"></i>
+    </a>
+  </div>
+</section>
+
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-modal-title" tabindex="-1">
+    <div class="modal">
+      <button class="close-modal-btn" aria-label="Close login form" id="close-login-modal">&times;</button>
+      <h2 id="login-modal-title">Login</h2>
+      <form id="login-form" novalidate>
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" name="login-email" required autocomplete="username" placeholder="you@example.com" />
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" name="login-password" required autocomplete="current-password" placeholder="Enter password" minlength="6" />
+        <button type="submit" class="modal-submit-btn">Login</button>
+      </form>
+      <p class="modal-footer-text">
+        Don't have an account?
+        <button type="button" id="to-signup-btn">Sign Up</button>
+      </p>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+  <div class="modal-overlay" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-modal-title" tabindex="-1">
+    <div class="modal">
+      <button class="close-modal-btn" aria-label="Close signup form" id="close-signup-modal">&times;</button>
+      <h2 id="signup-modal-title">Sign Up</h2>
+      <form id="signup-form" novalidate>
+        <label for="signup-name">Full Name</label>
+        <input type="text" id="signup-name" name="signup-name" required autocomplete="name" placeholder="Your full name" minlength="2" />
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" name="signup-email" required autocomplete="email" placeholder="you@example.com" />
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" name="signup-password" required autocomplete="new-password" placeholder="Create a password" minlength="6" />
+        <button type="submit" class="modal-submit-btn">Sign Up</button>
+      </form>
+      <p class="modal-footer-text">
+        Already have an account?
+        <button type="button" id="to-login-btn">Login</button>
+      </p>
+    </div>
+  </div>
+<script>
+  // Mobile menu toggle logic
+  const menuToggle = document.querySelector('.menu-toggle');
+  const mobileMenu = document.querySelector('.nav-mobile');
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', () => {
+      const expanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+      menuToggle.setAttribute('aria-expanded', !expanded);
+      mobileMenu.classList.toggle('show');
+
+      const links = mobileMenu.querySelectorAll('a');
+      links.forEach(link => {
+        link.tabIndex = !expanded ? 0 : -1;
+      });
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('show');
+        menuToggle.setAttribute('aria-expanded', false);
+        mobileMenu.querySelectorAll('a').forEach(a => a.tabIndex = -1);
+      });
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(a => a.tabIndex = -1);
+  }
+
+  // ✅ Optional buttons (check if they exist before adding listeners)
+  const btnRide = document.getElementById('btn-ride');
+  if (btnRide) {
+    btnRide.addEventListener('click', () => alert('Navigate to Book a Ride page'));
+  }
+
+  const btnFood = document.getElementById('btn-food');
+  if (btnFood) {
+    btnFood.addEventListener('click', () => alert('Navigate to Order Food page'));
+  }
+
+  const btnStay = document.getElementById('btn-stay');
+  if (btnStay) {
+    btnStay.addEventListener('click', () => alert('Navigate to Find a Stay page'));
+  }
+
+  const serviceRide = document.getElementById('service-ride');
+  if (serviceRide) {
+    serviceRide.addEventListener('click', () => alert('Get started with Booking a Ride'));
+  }
+
+  const serviceFood = document.getElementById('service-food');
+  if (serviceFood) {
+    serviceFood.addEventListener('click', () => alert('Get started with Ordering Food'));
+  }
+
+  const serviceStay = document.getElementById('service-stay');
+  if (serviceStay) {
+    serviceStay.addEventListener('click', () => alert('Get started with Finding a Stay'));
+  }
+
+  // Modal logic
+  const loginBtn = document.getElementById('login-btn');
+  const signupBtn = document.getElementById('signup-btn');
+  const loginModal = document.getElementById('login-modal');
+  const signupModal = document.getElementById('signup-modal');
+  const closeLoginBtn = document.getElementById('close-login-modal');
+  const closeSignupBtn = document.getElementById('close-signup-modal');
+  const toSignupBtn = document.getElementById('to-signup-btn');
+  const toLoginBtn = document.getElementById('to-login-btn');
+  const mobileLoginLink = document.getElementById('mobile-login-link');
+  const mobileSignupLink = document.getElementById('mobile-signup-link');
+
+  if (loginBtn && loginModal) {
+    loginBtn.addEventListener('click', () => openModal(loginModal));
+  }
+
+  if (signupBtn && signupModal) {
+    signupBtn.addEventListener('click', () => openModal(signupModal));
+  }
+
+  if (mobileLoginLink && loginModal && mobileMenu) {
+    mobileLoginLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeModal(mobileMenu);
+      openModal(loginModal);
+    });
+  }
+
+  if (mobileSignupLink && signupModal && mobileMenu) {
+    mobileSignupLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeModal(mobileMenu);
+      openModal(signupModal);
+    });
+  }
+
+  if (closeLoginBtn && loginModal) {
+    closeLoginBtn.addEventListener('click', () => closeModal(loginModal));
+  }
+
+  if (closeSignupBtn && signupModal) {
+    closeSignupBtn.addEventListener('click', () => closeModal(signupModal));
+  }
+
+  if (toSignupBtn && signupModal && loginModal) {
+    toSignupBtn.addEventListener('click', () => {
+      closeModal(loginModal);
+      openModal(signupModal);
+    });
+  }
+
+  if (toLoginBtn && signupModal && loginModal) {
+    toLoginBtn.addEventListener('click', () => {
+      closeModal(signupModal);
+      openModal(loginModal);
+    });
+  }
+
+  [loginModal, signupModal].forEach(modal => {
+    if (modal) {
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) closeModal(modal);
+      });
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (loginModal && loginModal.classList.contains('show')) closeModal(loginModal);
+      if (signupModal && signupModal.classList.contains('show')) closeModal(signupModal);
+    }
+  });
+
+  function trapFocus(element) {
+    const focusableElements = element.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])');
+    if (focusableElements.length === 0) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    element.addEventListener('keydown', function trap(e) {
+      if (e.key === 'Tab') {
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    }, { capture: true });
+
+    firstElement.focus();
+  }
+
+  function openModal(modal) {
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    trapFocus(modal);
+  }
+
+  function closeModal(modal) {
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  // Form logic
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const email = loginForm['login-email'].value.trim();
+      const pass = loginForm['login-password'].value.trim();
+      if (!email || !pass) {
+        alert('Please fill in all fields.');
+        return;
+      }
+      alert('Login submitted\nEmail: ' + email);
+      loginForm.reset();
+      closeModal(loginModal);
+    });
+  }
+
+  const signupForm = document.getElementById('signup-form');
+  if (signupForm) {
+    signupForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = signupForm['signup-name'].value.trim();
+      const email = signupForm['signup-email'].value.trim();
+      const pass = signupForm['signup-password'].value.trim();
+      if (!name || !email || !pass) {
+        alert('Please fill in all fields.');
+        return;
+      }
+      alert('Signup submitted\nName: ' + name + '\nEmail: ' + email);
+      signupForm.reset();
+      closeModal(signupModal);
+    });
+  }
+</script>
+
+
+
+
+<!-- Swiper JS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  const swiper = new Swiper(".mealsSwiper", {
+    slidesPerView: 1,
+    spaceBetween: 30,
+    loop: true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+      768: { slidesPerView: 2 },
+      1024: { slidesPerView: 3 }
+    }
+  });
+</script>
+
+
+
+<!-- AOS (Animate On Scroll) CSS + JS -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 1200, once: true });
+</script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVlM1k58aiWlFY3YMoAIaaTo7s1Hrr0Rg&libraries=places"></script>
+
+
+
+</body>
+</html>
+

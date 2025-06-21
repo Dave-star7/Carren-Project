@@ -6,7 +6,7 @@
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background-color: #F5E9E2; /* Light beige */
+      background-color: #FFFFFF; /* Light beige */
       color: #2B5C8A; /* Shades of blue for text */
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
@@ -222,15 +222,6 @@ nav.primary-nav a:focus::after {
   }
 }
 
-.hero {
-  position: relative;
-  background: url('../images/background.png') center/cover no-repeat;
-  background-color: #e8f3fb; /* fallback color */
-  padding: 96px 24px 120px;
-  text-align: center;
-  color: #053B50;
-  overflow: hidden;
-}
 
 
   
@@ -563,249 +554,218 @@ input[type="text"]:focus {
 
 
 
-/* styles.css - Updated with mobile behavior */
 
-.hero-section {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 2rem;
-  background: #ffffff;
-  gap: 2rem;
-}
-
-.form-column {
-  flex: 1 1 400px;
-  max-width: 50%;
-  padding: 1rem;
-}
-
-.image-column {
-  flex: 1 1 400px;
-  max-width: 50%;
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hero-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.search-card {
+.user-action-bar {
   background: #f1f5f9;
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.ride-form {
-  display: grid;
-  gap: 1rem;
-}
-
-.ride-form input,
-.ride-form button {
-  padding: 1rem;
-  border-radius: 12px;
-  border: 1px solid #cbd5e1;
-  font-size: 1rem;
-  width: 100%;
-}
-
-.ride-type-selector {
+  padding: 0.75rem 1rem;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #cbd5e1;
+}
+
+.left-section .logo-text {
+  color: #1e3a8a;
+  font-weight: 600;
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.account-dropdown-wrapper {
+  position: relative;
+}
+
+.account-toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 500;
+  color: #1e3a8a;
+}
+
+.account-dropdown {
+  display: none;
+  position: absolute;
+  top: 2.5rem;
+  right: 0;
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  padding: 0.5rem 0;
+  min-width: 180px;
+  z-index: 1000;
+}
+
+.account-dropdown li {
+  padding: 0.5rem 1rem;
+}
+
+.account-dropdown li a {
+  color: #1e3a8a;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
   gap: 0.5rem;
 }
 
-.ride-type {
-  flex: 1;
-  background: #dbeafe;
-  border: none;
-  padding: 0.9rem;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 500;
+.account-dropdown li:hover {
+  background-color: #f0f4f8;
 }
 
-.ride-type.active {
-  background: #3b82f6;
-  color: white;
-}
-
-.find-button {
-  background: #2563eb;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-@media (max-width: 768px) {
-  .hero-section {
+/* Responsive */
+@media (max-width: 600px) {
+  .right-section {
     flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 
-  .form-column {
-    max-width: 100%;
-  }
-
-  .image-column {
-    display: none;
-  }
-
-  .search-card {
-    padding: 1.5rem;
-  }
-
-  .hero-img {
-    display: none;
-  }
-}
-
-
-.results-section {
-  padding: 4rem 2rem;
-  background-color: #f9fafb;
-  text-align: center;
-}
-
-.results-section h2 {
-  color: #1e3a8a;
-  font-size: 2rem;
-  margin-bottom: 2rem;
-}
-
-.results-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-}
-
-.ride-card {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-  width: 260px;
-  transition: transform 0.3s ease;
-}
-
-.ride-card:hover {
-  transform: translateY(-6px);
-}
-
-.ride-card img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  margin-bottom: 1rem;
-}
-
-.ride-card h3 {
-  font-size: 1.2rem;
-  color: #1e3a8a;
-  margin-bottom: 0.5rem;
-}
-
-.ride-card p {
-  margin: 0.3rem 0;
-  color: #444;
-}
-
-.book-button {
-  margin-top: 1rem;
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  padding: 0.7rem 1.2rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.book-button:hover {
-  background-color: #1d4ed8;
-}
-
-@media (max-width: 768px) {
-  .results-grid {
+  .user-action-bar {
     flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+
+
+
+
+/* Remove column layout for mobile */
+@media (max-width: 600px) {
+  .user-action-bar {
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
   }
 
-  .ride-card {
-    width: 90%;
-  }
-}
-
-
-
-.why-choose-section {
-  padding: 4rem 2rem;
-  background: #fff;
-  text-align: center;
-}
-
-.why-choose-section h2 {
-  font-size: 2rem;
-  color: #1e3a8a;
-  margin-bottom: 3rem;
-}
-
-.benefits-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-}
-
-.benefit-card {
-  background-color: #f3f6fb;
-  padding: 2rem;
-  border-radius: 16px;
-  width: 260px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
-}
-
-.benefit-card:hover {
-  transform: translateY(-4px);
-}
-
-.benefit-card img {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 1rem;
-}
-
-.benefit-card h3 {
-  font-size: 1.1rem;
-  color: #1e3a8a;
-  margin-bottom: 0.5rem;
-}
-
-.benefit-card p {
-  font-size: 0.95rem;
-  color: #4a4a4a;
-}
-
-@media (max-width: 768px) {
-  .benefits-grid {
-    flex-direction: column;
+  .right-section {
+    flex-direction: row;
+    justify-content: flex-end;
     align-items: center;
-  }
-
-  .benefit-card {
-    width: 90%;
+    gap: 1rem;
   }
 }
+
+
+
+     .hero-gradient {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .ride-option {
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+        
+        .ride-option:hover {
+            background-color: #f0f4f8;
+        }
+        
+        .ride-option.selected {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        
+        .map-container {
+            height: 300px;
+            background-color: #e2e8f0;
+            border-radius: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .map-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #cbd5e1;
+            color: #64748b;
+        }
+        
+        .driver-card {
+            transition: all 0.3s ease;
+        }
+        
+        .driver-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background-color: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .payment-method {
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary);
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s forwards;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+
 
 
 

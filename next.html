@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Multi-Service Booking Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <link rel="stylesheet" href="assets/css/index.css">
+  
+</head>
+<body>
+  <header>
+    <div class="header-inner container">
+     <div class="logo" tabindex="0" aria-label="Site logo and home link">
+  <a href="index.html">
+    <img src="/assets/images/new_logo.jpeg" alt="WatamuWays Logo" class="logo-img">
+  </a>
+</div>
+
+      <nav class="primary-nav" role="navigation" aria-label="Primary navigation">
+        <a href="#book-ride" tabindex="0">Book a Ride</a>
+        <a href="#order-food" tabindex="0">Order Food</a>
+        <a href="#find-stay" tabindex="0">Find a Stay</a>
+        <a href="#about" tabindex="0">About</a>
+        <a href="#contact" tabindex="0">Contact</a>
+      </nav>
+      <div class="auth-buttons">
+        <button class="auth-btn" id="login-btn" aria-haspopup="dialog" aria-controls="login-modal">Login</button>
+        <button class="auth-btn" id="signup-btn" aria-haspopup="dialog" aria-controls="signup-modal">Sign Up</button>
+      </div>
+      <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="material-icons">menu</span>
+      </button>
+    </div>
+    <nav class="nav-mobile" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+      <a href="#book-ride" tabindex="-1">Book a Ride</a>
+      <a href="#order-food" tabindex="-1">Order Food</a>
+      <a href="#find-stay" tabindex="-1">Find a Stay</a>
+      <a href="#about" tabindex="-1">About</a>
+      <a href="#contact" tabindex="-1">Contact</a>
+      <a href="#" id="mobile-login-link" tabindex="-1">Login</a>
+      <a href="#" id="mobile-signup-link" tabindex="-1">Sign Up</a>
+    </nav>
+  </header>
+
+
+  
+
+
+  <!-- 🌟 User Account Action Bar -->
+<div class="user-action-bar">
+  <div class="left-section">
+    <span class="logo-text">👋 Welcome back, David</span>
+  </div>
+  <div class="right-section">
+    <div class="account-dropdown-wrapper">
+      <div class="account-toggle" id="accountToggle">
+        <i class="fas fa-user-circle"></i> My Account <i class="fas fa-chevron-down"></i>
+      </div>
+      <ul class="account-dropdown" id="accountDropdown">
+        <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+        <li><a href="orders.html"><i class="fas fa-box"></i> My Orders</a></li>
+        <li><a href="bookings.html"><i class="fas fa-car"></i> My Bookings</a></li>
+        <li><a href="#"><i class="fas fa-question-circle"></i> Help</a></li>
+        <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  document.getElementById('accountToggle').addEventListener('click', function () {
+    document.getElementById('accountDropdown').classList.toggle('show');
+  });
+
+  document.addEventListener('click', function (event) {
+    const toggle = document.getElementById('accountToggle');
+    const dropdown = document.getElementById('accountDropdown');
+    if (!toggle.contains(event.target) && !dropdown.contains(event.target)) {
+      dropdown.classList.remove('show');
+    }
+  });
+</script>
+
+<style>
+  .account-dropdown.show {
+    display: block;
+  }
+</style>
+
+
+
+  
+
+  <main>
+    
+    
+
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <section class="footer-section" aria-labelledby="footer-company">
+        <h4 id="footer-company">Company</h4>
+        <a href="#about" tabindex="0">About Us</a>
+        <a href="#careers" tabindex="0">Careers</a>
+        <a href="#blog" tabindex="0">Blog</a>
+      </section>
+      <section class="footer-section" aria-labelledby="footer-support">
+        <h4 id="footer-support">Support</h4>
+        <a href="#help" tabindex="0">Help Center</a>
+        <a href="#contact" tabindex="0">Contact Us</a>
+        <a href="#terms" tabindex="0">Terms of Service</a>
+        <a href="#privacy" tabindex="0">Privacy Policy</a>
+      </section>
+      <section class="footer-section" aria-labelledby="footer-social">
+  <h4 id="footer-social">Follow Us</h4>
+  <div class="social-icons">
+    <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" tabindex="0">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" tabindex="0">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter (X)" tabindex="0">
+      <i class="fab fa-x-twitter"></i>
+    </a>
+    <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok" tabindex="0">
+      <i class="fab fa-tiktok"></i>
+    </a>
+  </div>
+</section>
+
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-modal-title" tabindex="-1">
+    <div class="modal">
+      <button class="close-modal-btn" aria-label="Close login form" id="close-login-modal">&times;</button>
+      <h2 id="login-modal-title">Login</h2>
+      <form id="login-form" novalidate>
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" name="login-email" required autocomplete="username" placeholder="you@example.com" />
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" name="login-password" required autocomplete="current-password" placeholder="Enter password" minlength="6" />
+        <button type="submit" class="modal-submit-btn">Login</button>
+      </form>
+      <p class="modal-footer-text">
+        Don't have an account?
+        <button type="button" id="to-signup-btn">Sign Up</button>
+      </p>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+  <div class="modal-overlay" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-modal-title" tabindex="-1">
+    <div class="modal">
+      <button class="close-modal-btn" aria-label="Close signup form" id="close-signup-modal">&times;</button>
+      <h2 id="signup-modal-title">Sign Up</h2>
+      <form id="signup-form" novalidate>
+        <label for="signup-name">Full Name</label>
+        <input type="text" id="signup-name" name="signup-name" required autocomplete="name" placeholder="Your full name" minlength="2" />
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" name="signup-email" required autocomplete="email" placeholder="you@example.com" />
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" name="signup-password" required autocomplete="new-password" placeholder="Create a password" minlength="6" />
+        <button type="submit" class="modal-submit-btn">Sign Up</button>
+      </form>
+      <p class="modal-footer-text">
+        Already have an account?
+        <button type="button" id="to-login-btn">Login</button>
+      </p>
+    </div>
+  </div>
+<script>
+  // Mobile menu toggle logic
+  const menuToggle = document.querySelector('.menu-toggle');
+  const mobileMenu = document.querySelector('.nav-mobile');
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', () => {
+      const expanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+      menuToggle.setAttribute('aria-expanded', !expanded);
+      mobileMenu.classList.toggle('show');
+
+      const links = mobileMenu.querySelectorAll('a');
+      links.forEach(link => {
+        link.tabIndex = !expanded ? 0 : -1;
+      });
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('show');
+        menuToggle.setAttribute('aria-expanded', false);
+        mobileMenu.querySelectorAll('a').forEach(a => a.tabIndex = -1);
+      });
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(a => a.tabIndex = -1);
+  }
+
+  // ✅ Optional buttons (check if they exist before adding listeners)
+  const btnRide = document.getElementById('btn-ride');
+  if (btnRide) {
+    btnRide.addEventListener('click', () => alert('Navigate to Book a Ride page'));
+  }
+
+  const btnFood = document.getElementById('btn-food');
+  if (btnFood) {
+    btnFood.addEventListener('click', () => alert('Navigate to Order Food page'));
+  }
+
+  const btnStay = document.getElementById('btn-stay');
+  if (btnStay) {
+    btnStay.addEventListener('click', () => alert('Navigate to Find a Stay page'));
+  }
+
+  const serviceRide = document.getElementById('service-ride');
+  if (serviceRide) {
+    serviceRide.addEventListener('click', () => alert('Get started with Booking a Ride'));
+  }
+
+  const serviceFood = document.getElementById('service-food');
+  if (serviceFood) {
+    serviceFood.addEventListener('click', () => alert('Get started with Ordering Food'));
+  }
+
+  const serviceStay = document.getElementById('service-stay');
+  if (serviceStay) {
+    serviceStay.addEventListener('click', () => alert('Get started with Finding a Stay'));
+  }
+
+  // Modal logic
+  const loginBtn = document.getElementById('login-btn');
+  const signupBtn = document.getElementById('signup-btn');
+  const loginModal = document.getElementById('login-modal');
+  const signupModal = document.getElementById('signup-modal');
+  const closeLoginBtn = document.getElementById('close-login-modal');
+  const closeSignupBtn = document.getElementById('close-signup-modal');
+  const toSignupBtn = document.getElementById('to-signup-btn');
+  const toLoginBtn = document.getElementById('to-login-btn');
+  const mobileLoginLink = document.getElementById('mobile-login-link');
+  const mobileSignupLink = document.getElementById('mobile-signup-link');
+
+  if (loginBtn && loginModal) {
+    loginBtn.addEventListener('click', () => openModal(loginModal));
+  }
+
+  if (signupBtn && signupModal) {
+    signupBtn.addEventListener('click', () => openModal(signupModal));
+  }
+
+  if (mobileLoginLink && loginModal && mobileMenu) {
+    mobileLoginLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeModal(mobileMenu);
+      openModal(loginModal);
+    });
+  }
+
+  if (mobileSignupLink && signupModal && mobileMenu) {
+    mobileSignupLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeModal(mobileMenu);
+      openModal(signupModal);
+    });
+  }
+
+  if (closeLoginBtn && loginModal) {
+    closeLoginBtn.addEventListener('click', () => closeModal(loginModal));
+  }
+
+  if (closeSignupBtn && signupModal) {
+    closeSignupBtn.addEventListener('click', () => closeModal(signupModal));
+  }
+
+  if (toSignupBtn && signupModal && loginModal) {
+    toSignupBtn.addEventListener('click', () => {
+      closeModal(loginModal);
+      openModal(signupModal);
+    });
+  }
+
+  if (toLoginBtn && signupModal && loginModal) {
+    toLoginBtn.addEventListener('click', () => {
+      closeModal(signupModal);
+      openModal(loginModal);
+    });
+  }
+
+  [loginModal, signupModal].forEach(modal => {
+    if (modal) {
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) closeModal(modal);
+      });
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (loginModal && loginModal.classList.contains('show')) closeModal(loginModal);
+      if (signupModal && signupModal.classList.contains('show')) closeModal(signupModal);
+    }
+  });
+
+  function trapFocus(element) {
+    const focusableElements = element.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])');
+    if (focusableElements.length === 0) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    element.addEventListener('keydown', function trap(e) {
+      if (e.key === 'Tab') {
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    }, { capture: true });
+
+    firstElement.focus();
+  }
+
+  function openModal(modal) {
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    trapFocus(modal);
+  }
+
+  function closeModal(modal) {
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  // Form logic
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const email = loginForm['login-email'].value.trim();
+      const pass = loginForm['login-password'].value.trim();
+      if (!email || !pass) {
+        alert('Please fill in all fields.');
+        return;
+      }
+      alert('Login submitted\nEmail: ' + email);
+      loginForm.reset();
+      closeModal(loginModal);
+    });
+  }
+
+  const signupForm = document.getElementById('signup-form');
+  if (signupForm) {
+    signupForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = signupForm['signup-name'].value.trim();
+      const email = signupForm['signup-email'].value.trim();
+      const pass = signupForm['signup-password'].value.trim();
+      if (!name || !email || !pass) {
+        alert('Please fill in all fields.');
+        return;
+      }
+      alert('Signup submitted\nName: ' + name + '\nEmail: ' + email);
+      signupForm.reset();
+      closeModal(signupModal);
+    });
+  }
+</script>
+
+
+
+
+<!-- Swiper JS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  const swiper = new Swiper(".mealsSwiper", {
+    slidesPerView: 1,
+    spaceBetween: 30,
+    loop: true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+      768: { slidesPerView: 2 },
+      1024: { slidesPerView: 3 }
+    }
+  });
+</script>
+
+
+
+<!-- AOS (Animate On Scroll) CSS + JS -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 1200, once: true });
+</script>
+
+
+</body>
+</html>
+
