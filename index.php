@@ -1,3 +1,9 @@
+<?php
+session_start();
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,9 +58,13 @@
 
 
   <!-- 🌟 User Account Action Bar -->
+<?php if (isset($_SESSION['user_name'])): ?>
+<!-- 🌟 User Account Action Bar -->
 <div class="user-action-bar">
   <div class="left-section">
-    <span class="logo-text">👋 Welcome back, David</span>
+    <span class="logo-text">
+      👋 Welcome back, <?php echo htmlspecialchars($_SESSION['user_name']); ?>
+    </span>
   </div>
   <div class="right-section">
     <div class="account-dropdown-wrapper">
@@ -66,12 +76,12 @@
         <li><a href="orders.html"><i class="fas fa-box"></i> My Orders</a></li>
         <li><a href="bookings.html"><i class="fas fa-car"></i> My Bookings</a></li>
         <li><a href="#"><i class="fas fa-question-circle"></i> Help</a></li>
-        <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        <li><a href="backend/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
       </ul>
     </div>
   </div>
 </div>
-
+<?php endif; ?>
 
 <script>
   document.getElementById('accountToggle').addEventListener('click', function () {
@@ -506,11 +516,11 @@
     <div class="modal">
       <button class="close-modal-btn" aria-label="Close login form" id="close-login-modal">&times;</button>
       <h2 id="login-modal-title">Login</h2>
-      <form id="login-form" novalidate>
+     <form id="login-form" action="backend/login.php" method="POST" novalidate>
         <label for="login-email">Email</label>
-        <input type="email" id="login-email" name="login-email" required autocomplete="username" placeholder="you@example.com" />
+        <input type="email" id="login-email" name="email" required autocomplete="username" placeholder="you@example.com" />
         <label for="login-password">Password</label>
-        <input type="password" id="login-password" name="login-password" required autocomplete="current-password" placeholder="Enter password" minlength="6" />
+        <input type="password" id="login-password" name="password" required autocomplete="current-password" placeholder="Enter password" minlength="6" />
         <button type="submit" class="modal-submit-btn">Login</button>
       </form>
       <p class="modal-footer-text">
@@ -521,25 +531,33 @@
   </div>
 
   <!-- Signup Modal -->
-  <div class="modal-overlay" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-modal-title" tabindex="-1">
-    <div class="modal">
-      <button class="close-modal-btn" aria-label="Close signup form" id="close-signup-modal">&times;</button>
-      <h2 id="signup-modal-title">Sign Up</h2>
-      <form id="signup-form" novalidate>
-        <label for="signup-name">Full Name</label>
-        <input type="text" id="signup-name" name="signup-name" required autocomplete="name" placeholder="Your full name" minlength="2" />
-        <label for="signup-email">Email</label>
-        <input type="email" id="signup-email" name="signup-email" required autocomplete="email" placeholder="you@example.com" />
-        <label for="signup-password">Password</label>
-        <input type="password" id="signup-password" name="signup-password" required autocomplete="new-password" placeholder="Create a password" minlength="6" />
-        <button type="submit" class="modal-submit-btn">Sign Up</button>
-      </form>
-      <p class="modal-footer-text">
-        Already have an account?
-        <button type="button" id="to-login-btn">Login</button>
-      </p>
-    </div>
+   <!-- Signup Modal -->
+<div class="modal-overlay" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-modal-title" tabindex="-1">
+  <div class="modal">
+    <button class="close-modal-btn" aria-label="Close signup form" id="close-signup-modal">&times;</button>
+    <h2 id="signup-modal-title">Sign Up</h2>
+
+    <form id="signup-form" action="backend/signup.php" method="POST" novalidate>
+      <label for="signup-name">Full Name</label>
+      <input type="text" id="signup-name" name="name" required autocomplete="name" placeholder="Your full name" minlength="2" />
+
+      <label for="signup-email">Email</label>
+      <input type="email" id="signup-email" name="email" required autocomplete="email" placeholder="you@example.com" />
+
+      <label for="signup-password">Password</label>
+      <input type="password" id="signup-password" name="password" required autocomplete="new-password" placeholder="Create a password" minlength="6" />
+
+      <button type="submit" class="modal-submit-btn">Sign Up</button>
+    </form>
+
+    <p class="modal-footer-text">
+      Already have an account?
+      <button type="button" id="to-login-btn">Login</button>
+    </p>
   </div>
+</div>
+
+ 
 
   <script>
     // Mobile menu toggle logic
@@ -687,35 +705,22 @@
     }
 
     // Form submissions with simple validation simulation
-    const loginForm = document.getElementById('login-form');
-    loginForm.addEventListener('submit', e => {
-      e.preventDefault();
-      // Basic validation
-      const email = loginForm['login-email'].value.trim();
-      const pass = loginForm['login-password'].value.trim();
-      if(!email || !pass) {
-        alert('Please fill in all fields.');
-        return;
-      }
-      alert('Login submitted\nEmail: ' + email);
-      loginForm.reset();
-      closeModal(loginModal);
-    });
+   const signupForm = document.getElementById('signup-form');
+signupForm.addEventListener('submit', e => {
+  const name = signupForm['signup-name'].value.trim();
+  const email = signupForm['signup-email'].value.trim();
+  const pass = signupForm['signup-password'].value.trim();
 
-    const signupForm = document.getElementById('signup-form');
-    signupForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const name = signupForm['signup-name'].value.trim();
-      const email = signupForm['signup-email'].value.trim();
-      const pass = signupForm['signup-password'].value.trim();
-      if(!name || !email || !pass) {
-        alert('Please fill in all fields.');
-        return;
-      }
-      alert('Signup submitted\nName: ' + name + '\nEmail: ' + email);
-      signupForm.reset();
-      closeModal(signupModal);
-    });
+  if (!name || !email || !pass) {
+    e.preventDefault(); // only prevent when validation fails
+    alert('Please fill in all fields.');
+    return;
+  }
+
+  // ✅ Let the form submit to PHP — remove alert and don't call preventDefault
+  // OR you can submit with fetch/AJAX, but that’s another setup
+});
+
   </script>
 
 
@@ -747,6 +752,21 @@
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
   AOS.init({ duration: 1200, once: true });
+</script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('show') === 'login') {
+      const loginModal = document.getElementById('login-modal');
+      if (loginModal) {
+        loginModal.classList.add('open'); // if you're using an "open" class
+        loginModal.style.display = 'block'; // or however you're showing modals
+        document.body.classList.add('modal-open'); // optional for styling
+      }
+    }
+  });
 </script>
 
 
